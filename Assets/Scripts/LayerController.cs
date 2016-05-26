@@ -26,20 +26,37 @@ public class LayerController : MonoBehaviour
 	public void MoveForward()
 	{
 		_currentLayer += 1;
-		StartCoroutine(ExecuteTweenOnLayer(goForeEnvironment, 0.07f));
-		StartCoroutine(ExecuteTweenOnLayer(goMiddleEnvironment, 0f));
+		StartCoroutine(ExecuteTweenOnLayer(goForeEnvironment, 0.1f, true));
+		StartCoroutine(ExecuteTweenOnLayer(goMiddleEnvironment, 0f, true));
 		
-		StartCoroutine(ExecuteTweenOnLayer(goCurrentFloor, 0.07f));
-		StartCoroutine(ExecuteTweenOnLayer(goNextFloor, 0f));
+		StartCoroutine(ExecuteTweenOnLayer(goCurrentFloor, 0.1f, true));
+		StartCoroutine(ExecuteTweenOnLayer(goNextFloor, 0f, true));
+	}
+	
+	public void MoveBackward()
+	{
+		_currentLayer -= 1;
+		StartCoroutine(ExecuteTweenOnLayer(goForeEnvironment, 0f, false));
+		StartCoroutine(ExecuteTweenOnLayer(goMiddleEnvironment, 0.1f, false));
+		
+		StartCoroutine(ExecuteTweenOnLayer(goCurrentFloor, 0f, false));
+		StartCoroutine(ExecuteTweenOnLayer(goNextFloor, 0.1f, false));
 	}
 
-	private IEnumerator ExecuteTweenOnLayer(GameObject layer, float delay)
+	private IEnumerator ExecuteTweenOnLayer(GameObject layer, float delay, bool isForward)
 	{
 		yield return new WaitForSeconds(delay);
 		
 		foreach(EnvironmentObj envObj in layer.GetComponentsInChildren<EnvironmentObj>())
 		{
-			envObj.ExecuteTween();
+			if(isForward)
+			{
+				envObj.ExecuteForwardTween();
+			}
+			else
+			{
+				envObj.ExecuteBackwardTween();
+			}
 		}
 	}
 	
