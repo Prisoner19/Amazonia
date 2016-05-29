@@ -20,6 +20,7 @@ public class ObjectCommand
     public TweenCommand tweenCommand;
     public ScaleCommand scaleCommand;
     public ChangeSpriteCommand changeSpriteCommand;
+    public MakeTransparentCommand makeTransparentCommand;
 }
 
 public class LayerEvents : MonoBehaviour
@@ -38,6 +39,7 @@ public class LayerEvents : MonoBehaviour
                 objCommand.goTarget.GetComponent<CommandExecuter>().ExecuteCommand(objCommand.tweenCommand);
                 objCommand.goTarget.GetComponent<CommandExecuter>().ExecuteCommand(objCommand.scaleCommand);
                 objCommand.goTarget.GetComponent<CommandExecuter>().ExecuteCommand(objCommand.changeSpriteCommand);
+                objCommand.goTarget.GetComponent<CommandExecuter>().ExecuteCommand(objCommand.makeTransparentCommand);
             }
         }
     }

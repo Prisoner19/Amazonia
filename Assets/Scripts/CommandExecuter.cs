@@ -27,6 +27,12 @@ public class ChangeSpriteCommand: Command
     public Sprite newSprite;
 }
 
+[System.SerializableAttribute]
+public class MakeTransparentCommand : Command
+{
+    public float duration;
+}
+
 public class CommandExecuter : MonoBehaviour 
 {
 	public void ExecuteCommand(Command command)
@@ -45,7 +51,11 @@ public class CommandExecuter : MonoBehaviour
 			{
 				ExecuteChangeSpriteCommand(command as ChangeSpriteCommand);
 			}
-		}
+			else if (command is MakeTransparentCommand)
+            {
+                ExecuteMakeTransparent(command as MakeTransparentCommand);
+            }
+        }
 	}
 	
 	private void ExecuteTweenCommand(TweenCommand command)
@@ -57,7 +67,7 @@ public class CommandExecuter : MonoBehaviour
 	{
         if (command.scaleVector != Vector2.zero)
         {
-            LeanTween.scale(gameObject, command.scaleVector, command.scaleTime).setDelay(command.delay).setEase(LeanTweenType.easeInOutQuad);;
+            LeanTween.scale(gameObject, command.scaleVector, command.scaleTime).setDelay(command.delay).setEase(LeanTweenType.easeInOutQuad);
         }
     }
 	
@@ -73,5 +83,15 @@ public class CommandExecuter : MonoBehaviour
     {
         yield return new WaitForSeconds(command.delay);
         gameObject.GetComponent<SpriteRenderer>().sprite = command.newSprite;
+    }
+
+    private void ExecuteMakeTransparent(MakeTransparentCommand command)
+    {
+       	LeanTween.alpha(gameObject, 0, command.duration).setDelay(command.delay).setEase(LeanTweenType.easeInOutQuad);
+
+        if (transform.childCount > 0)
+        {
+            LeanTween.alpha(gameObject.transform.GetChild(0).gameObject, 1, command.duration).setDelay(command.delay).setEase(LeanTweenType.easeInOutQuad);
+        }
     }
 }
