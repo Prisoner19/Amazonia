@@ -50,7 +50,7 @@ public class CommandExecuter : MonoBehaviour
 	
 	private void ExecuteTweenCommand(TweenCommand command)
 	{
-        LeanTween.move(gameObject, command.tweenPosition, command.tweenTime).setDelay(command.delay).setEase(LeanTweenType.easeInOutQuad);;
+        LeanTween.move(gameObject, command.tweenPosition, command.tweenTime).setDelay(command.delay).setEase(LeanTweenType.easeInOutQuad);
 	}
 	
 	private void ExecuteScaleCommand(ScaleCommand command)
