@@ -4,14 +4,14 @@ using System.Collections;
 public class LayerController : MonoBehaviour 
 {
 	private static LayerController _instance;
-	
-	public GameObject goLayer1;
+
+    public GameObject goLayer0;
+    public GameObject goLayer1;
 	public GameObject goLayer2;
     public GameObject goLayer3;
     public GameObject goLayer4;
-    public GameObject goLayer5;
 
-	private int _currentLayer;
+    private int _currentLayer;
 
 	void Awake()
 	{
@@ -20,17 +20,17 @@ public class LayerController : MonoBehaviour
 
 	void Start () 
 	{
-		_currentLayer = 1;
-	}
+		_currentLayer = 0;
+    }
 
     public void MoveForward()
     {
         if (GetCurrentLayer() != null)
-        { 
+        {
             GetCurrentLayer().GetComponent<LayerEvents>().ExecuteCommandList(EventTrigger.onMoveForward);
         }
         
-        _currentLayer = (_currentLayer == 5) ? _currentLayer : _currentLayer + 1;
+        _currentLayer = (_currentLayer == 4) ? _currentLayer : _currentLayer + 1;
     }
 
     public void MoveBackward()
@@ -47,11 +47,11 @@ public class LayerController : MonoBehaviour
     { 
         switch (_currentLayer)
         {
+            case 0: return goLayer0;
             case 1: return goLayer1;
             case 2: return goLayer2;
             case 3: return goLayer3;
             case 4: return goLayer4;
-            case 5: return goLayer5;
             default: return null;
         }
     }
