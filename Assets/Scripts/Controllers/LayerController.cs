@@ -7,6 +7,9 @@ public class LayerController : MonoBehaviour
 	
 	public GameObject goLayer1;
 	public GameObject goLayer2;
+    public GameObject goLayer3;
+    public GameObject goLayer4;
+    public GameObject goLayer5;
 
 	private int _currentLayer;
 
@@ -22,17 +25,36 @@ public class LayerController : MonoBehaviour
 
     public void MoveForward()
     {
-        _currentLayer += 1;
-
-        goLayer1.GetComponent<LayerEvents>().ExecuteCommandList(EventTrigger.onMoveForward);
+        if (GetCurrentLayer() != null)
+        { 
+            GetCurrentLayer().GetComponent<LayerEvents>().ExecuteCommandList(EventTrigger.onMoveForward);
+        }
+        
+        _currentLayer = (_currentLayer == 5) ? _currentLayer : _currentLayer + 1;
     }
 
     public void MoveBackward()
     {
-		_currentLayer += 1;
-
-        goLayer2.GetComponent<LayerEvents>().ExecuteCommandList(EventTrigger.onMoveForward);
+        if (GetCurrentLayer() != null)
+        { 
+            GetCurrentLayer().GetComponent<LayerEvents>().ExecuteCommandList(EventTrigger.onMoveBackward);
+        }
+        
+        _currentLayer = (_currentLayer == 1) ? _currentLayer : _currentLayer - 1;
 	}
+
+    private GameObject GetCurrentLayer()
+    { 
+        switch (_currentLayer)
+        {
+            case 1: return goLayer1;
+            case 2: return goLayer2;
+            case 3: return goLayer3;
+            case 4: return goLayer4;
+            case 5: return goLayer5;
+            default: return null;
+        }
+    }
 
     // public void MoveForward()
     // {

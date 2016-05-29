@@ -32,7 +32,7 @@ public class LayerEvents : MonoBehaviour
     {
         CommandList list = GetListToExecute(trigger);
         
-        if(list != null)
+        if(list != null && list.commandArray.Length > 0)
         {
             foreach (ObjectCommand objCommand in list.commandArray)
             {

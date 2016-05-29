@@ -31,6 +31,7 @@ public class ChangeSpriteCommand: Command
 public class MakeTransparentCommand : Command
 {
     public float duration;
+    public bool toChild;
 }
 
 public class CommandExecuter : MonoBehaviour 
@@ -87,11 +88,23 @@ public class CommandExecuter : MonoBehaviour
 
     private void ExecuteMakeTransparent(MakeTransparentCommand command)
     {
-       	LeanTween.alpha(gameObject, 0, command.duration).setDelay(command.delay).setEase(LeanTweenType.easeInOutQuad);
-
-        if (transform.childCount > 0)
+        if (command.toChild == false)
         {
-            LeanTween.alpha(gameObject.transform.GetChild(0).gameObject, 1, command.duration).setDelay(command.delay).setEase(LeanTweenType.easeInOutQuad);
+            LeanTween.alpha(gameObject, 0, command.duration).setDelay(command.delay).setEase(LeanTweenType.easeInOutQuad);
+
+            if (transform.childCount > 0)
+            {
+                LeanTween.alpha(gameObject.transform.GetChild(0).gameObject, 1, command.duration).setDelay(command.delay).setEase(LeanTweenType.easeInOutQuad);
+            }
+        }
+        else
+        {
+            LeanTween.alpha(gameObject, 1, command.duration).setDelay(command.delay).setEase(LeanTweenType.easeInOutQuad);
+            
+            if (transform.childCount > 0)
+            {
+                LeanTween.alpha(gameObject.transform.GetChild(0).gameObject, 1, command.duration).setDelay(command.delay).setEase(LeanTweenType.easeInOutQuad);
+            }
         }
     }
 }
